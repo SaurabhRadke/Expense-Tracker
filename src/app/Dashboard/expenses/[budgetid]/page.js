@@ -57,7 +57,7 @@ export default function EachExpense({params}){
               
         }
         toast({
-            title: DELExpense.statusText,
+            title: "Expense Deleted Successfully",
         })
     }
     const addExpenses=async()=>{
@@ -94,7 +94,7 @@ export default function EachExpense({params}){
             Expense_Name.current.value=""   
         }
         toast({
-            title: AddExpense.statusText,
+            title: "Expenses Added Succesfully",
         })
         SetAddingExp(false)
         
