@@ -1,13 +1,12 @@
 "use client"
-import Image from "next/image";
+
 import Headers from "./Components/Header";
-import bg from "@/app/assets/websitebg.jpg"
+
 import HeroSection from "./Components/HeroSection";
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react'
 import { useEffect, useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
-import { UserDetailsContext } from "./store/userDetailsStore";
 import ValidateToken from "@/lib/ValidateToken";
 import { ExpenseTrackerContextProvider } from "./store/ExpenseTrackerContext";
 import HandelLogoutFuncnality from "@/lib/SigoutFunctionality";
@@ -77,7 +76,7 @@ export default function Home() {
       <main className=" relative flex h-screen w-screen flex-col overflow-hidden ">
       <Toaster />
       <Headers HandelLogin={handelLoginpage} authenticated={authenticated} HandelLogout={HandelLogout}/> 
-      <HeroSection login={loginPage} HandelLogin={handelLoginpage}/>
+      <HeroSection login={loginPage} HandelLogin={handelLoginpage} authenticated={authenticated} />
     </main>
     </ExpenseTrackerContextProvider>
     

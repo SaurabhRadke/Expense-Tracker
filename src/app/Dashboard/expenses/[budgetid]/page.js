@@ -48,7 +48,13 @@ export default function EachExpense({params}){
         })
         if(DELExpense.status===201){
             const Updated=await DELExpense.json()
-            setCurrBudget(Updated)   
+            Updated.forEach((each)=>{
+                if(each._id.toString()===budgetid){
+                    setCurrBudget(each) 
+                }
+            })
+            ExpenseContext.ChangedBudgetList(Updated)
+              
         }
         toast({
             title: DELExpense.statusText,

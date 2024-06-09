@@ -1,8 +1,11 @@
 "use client"
+import { useRouter } from "next/navigation";
 import { createContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 export const ExpenseDetailsContext=createContext()
 
 export const ExpenseTrackerContextProvider=({children})=>{
+    const router = useRouter()
     const [allBudgets,setAllBudgets]=useState([])
     const [currentWindowName,setCurrentWindowName]=useState("Home")
     const [dark,setdark]=useState(false)
@@ -12,6 +15,7 @@ export const ExpenseTrackerContextProvider=({children})=>{
     const [totalSpend,setTotalSpend]=useState(0)
     const [emptyList,setEmptyList]=useState(false)
     const [userEmail,setUserEmail]=useState("")
+    const [login,setLogin]=useState(false)
     useEffect(()=>{
         // setBudgetListLoader(true)
         // console.log("Dashhh",data)
@@ -40,19 +44,27 @@ export const ExpenseTrackerContextProvider=({children})=>{
     useEffect(()=>{
         MakeAllCalculations()
     },[allBudgets])
-    const DeleteExpense=async(exp_id,budget_id)=>{
-        const DeleteExpense=await fetch(`/api/getBudgets/singleExpense/${budget_id}`,{
-            method:"DELETE",
-            body:JSON.stringify({ExpenseId:exp_id}),
-            headers:{
-                'Content-Type': 'application/json',
+    const DeleteExpense = async (exp_id, budget_id) => {
+        try {
+            const response = await fetch(`/api/getBudgets/singleExpense/${budget_id}`, {
+                method: "DELETE",
+                body: JSON.stringify({ ExpenseId: exp_id }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
             }
-        })
-        if(DeleteExpense.status===201){
-            const Updated=await DeleteExpense.json()
-            setAllBudgets(Updated)
+    
+            const Updated = await response.json();
+            setAllBudgets(Updated);
+        } catch (error) {
+            console.error("Failed to delete expense:", error);
         }
-    }
+    };
+    
 
     function SearchMethod(data){
         const temp=[]
@@ -73,13 +85,41 @@ export const ExpenseTrackerContextProvider=({children})=>{
         let totalSpend=0
         // console.log("allll",allBudgets)
         allBudgets.forEach((budget)=>{
-            console.log("bbbbb",budget)
             total+=Number(budget.Amount)
             totalSpend+=(budget.TotalSpend)
         })
         setTotalBudget(total)
         setTotalSpend(totalSpend)
     }
+    const HandelLogin = async (email,password) => {
+        setLogin(true);
+        const userDetails = { Email: email, Password: password };
+      
+        if (email === "" || password=== "") {
+          toast.error("Login Fields are Missing");
+          setLogin(false);
+          return null;
+        }
+      
+        const loginResponse = await fetch('/api/manualauth/login', {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userDetails)
+        });
+        if (loginResponse.status === 201) {
+          toast.success('Login Successfully');
+          setUserEmail(email)
+          localStorage.setItem('user_email', email);
+          router.push('/Dashboard');
+        } else {
+          const errorData = await loginResponse.json();
+          toast.error(errorData.error || 'Login failed');
+        }
+      
+        setLogin(false);
+      }
     return(
         <ExpenseDetailsContext.Provider value={{
             BudgetList:allBudgets,
@@ -96,8 +136,10 @@ export const ExpenseTrackerContextProvider=({children})=>{
             TotalSpend:totalSpend,
             EmptyBudget:emptyList,
             User:userEmail,
-            ChangeUser:setUserEmail
-        
+            ChangeUser:setUserEmail,
+            LoginHandler:HandelLogin,
+            Login:login,
+            StatusLogin:setLogin
         }}>
             {children}
         </ExpenseDetailsContext.Provider>

@@ -39,7 +39,6 @@ export async function DELETE(request,{params}){
     try {
         const {budgetId}=params
         const DeleteExpense=await request.json()
-        console.log(DeleteExpense)
         const budget=await BudgetModel.findOne({_id:budgetId})
         var deltedAmount
         const deltedData=budget.Expenses.filter((expense)=>{
@@ -52,14 +51,13 @@ export async function DELETE(request,{params}){
             }
         })
         budget.Expenses=deltedData
-        console.log(deltedAmount)
         budget.TotalSpend-=deltedAmount
         budget.TotalItem-=1
-        console.log("daaa",deltedAmount)
+        const Dele=await ExpenseModel.deleteOne({_id:DeleteExpense.ExpenseId})
         const dataUpdated=await budget.save()
-        console.log(deltedData)
-        console.log("Saveddd Chages",dataUpdated)
-        return NextResponse.json(budget,{status:201,statusText:"Expense Deleted  successfully"})
+        const allbudgets=await BudgetModel.find()
+        // console.log(budget)
+        return NextResponse.json(allbudgets,{status:201,statusText:"Expense Deleted  successfully"})
     } catch (error) {
         console.log(error)
         return NextResponse.json({message:"Some error occured"},{status:401,statusText:"Error in deleting Expenses"})

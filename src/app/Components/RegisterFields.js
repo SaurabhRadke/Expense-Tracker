@@ -1,13 +1,15 @@
 "use client"
-import { useRef, useState } from "react"
+import { useContext, useRef, useState } from "react"
 import { FaLightbulb } from "react-icons/fa";
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation'
+import { ExpenseDetailsContext } from "../store/ExpenseTrackerContext";
 
 export default function RegisterField({HandelPage}){
     const router = useRouter()
     const username=useRef()
     const [register,setRegister]=useState(false)
+    const expenseContext=useContext(ExpenseDetailsContext)
     const email=useRef()
     const password=useRef()
     const [seePass,setSeePass]=useState(false)
@@ -30,18 +32,7 @@ export default function RegisterField({HandelPage}){
         if(Register_Response.status===201){
           toast.success('Registed Successfully')
           toast.success('Login Initiated')
-          const login_Response=await fetch('/api/manualauth/login',{
-            method:"POST",
-            headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(userDetails)
-        })
-        if(login_Response.status===201){
-          toast.success('Login Successfully')
-          localStorage.setItem('user_email',userDetails.Email)
-          router.push('/Dashboard')
-        }
+          expenseContext.LoginHandler(email.current.value,password.current.value)
         }
         else{
           toast.error(registerStatus.message)

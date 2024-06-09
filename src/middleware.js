@@ -13,7 +13,6 @@ export default async function Middleware(request) {
     const encoder = new TextEncoder();
     const secretKeyUint8Array = encoder.encode(JwtSecraet);
     const { payload } = await jwtVerify(token.value, secretKeyUint8Array);
-    console.log(payload)
     request.user = payload; // Attach user data to the request
     return NextResponse.next();
   } catch (err) {

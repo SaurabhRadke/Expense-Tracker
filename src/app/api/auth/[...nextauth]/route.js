@@ -27,8 +27,8 @@ const authOption=nextAuth({
           name: "Credentials",
 
           async authorize(credentials){
-            console.log("Login Initisateddd")
-            console.log("CCCCC",credentials)
+            // console.log("Login Initisateddd")
+            // console.log("CCCCC",credentials)
             const Register_Response=await fetch('http://localhost:3000/api/manualauth/login',{
               method:"POST",
               headers: {
@@ -39,7 +39,7 @@ const authOption=nextAuth({
           })
 
               if(Register_Response.status===201){
-                console.log("Login Succesfull with Nextauhth")
+                // console.log("Login Succesfull with Nextauhth")
                 return credentials
               }
               else{

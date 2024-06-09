@@ -32,7 +32,7 @@ export default function BudgetUpdate({DeleteBudgetfromID,budgetIID,previousBudge
                     <AlertDialogHeader>
                         <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                         <AlertDialogDescription>
-                            This action cannot be undo. This will permanently delete your <span className=" font-semibold tracking-wider text-black">Budget</span> and  <span className=" font-semibold tracking-wider text-black">Expenses</span> permanently.
+                            This action cannot be undo. This will permanently delete your <span className=" font-semibold tracking-wider text-black">Budget</span> and  <span className=" font-semibold tracking-wider text-black">Expenses</span>.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>

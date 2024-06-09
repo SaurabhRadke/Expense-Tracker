@@ -17,7 +17,6 @@ import ValidateToken from "@/lib/ValidateToken";
 export default function Dashboard(){
     const { toast } = useToast()
     const ExpenseContext=useContext(ExpenseDetailsContext)
-    // console.log("m,m,m,m",ExpenseContext.User)
     const allBudgets=ExpenseContext.BudgetList
     const emptyList=ExpenseContext.EmptyBudget
 

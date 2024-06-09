@@ -8,19 +8,19 @@ import RegisterField from "./RegisterFields";
 import LoginFields from "./LoginFileds";
 
 export default  function SignInPage(){
-    const { data, status } = useSession();
+    // const { data, status } = useSession();
     const [signInWindow,setSignInWindow]=useState(true)
-  useEffect(()=>{
-    function SetUserdetails(){
-        if(data){
-            localStorage.setItem('Penny-ouAth',true);
-        }
-        else{
-            localStorage.setItem('Penny-ouAth',false);
-        }
-    }
-    SetUserdetails()
-  },[data])
+//   useEffect(()=>{
+//     function SetUserdetails(){
+//         if(data){
+//             localStorage.setItem('Penny-ouAth',true);
+//         }
+//         else{
+//             localStorage.setItem('Penny-ouAth',false);
+//         }
+//     }
+//     SetUserdetails()
+//   },[data])
     const HandelSignInPage=()=>{
       setSignInWindow(!signInWindow)
     }

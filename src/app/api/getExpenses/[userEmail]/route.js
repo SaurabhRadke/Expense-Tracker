@@ -9,7 +9,7 @@ export async function GET(request,{params}){
     try {
         const user_email=params.userEmail
         const Allexpense=await ExpenseModel.find({CreatedBy:"demo1@gmail.com"})
-        console.log(Allexpense)
+
         return NextResponse.json(Allexpense,{status:201,statusText:"Expense Get Succesfully"})
     } catch (error) {
         console.log(error)

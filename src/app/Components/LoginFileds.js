@@ -4,43 +4,17 @@ import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast';
 
 import { useContext, useRef, useState } from "react"
-import { signIn } from "next-auth/react";
 import { ExpenseDetailsContext } from "../store/ExpenseTrackerContext";
 export default function LoginFields({HandelPage}){
   const expenseContext=useContext(ExpenseDetailsContext)
-    const router = useRouter()
-    const [login,setLogin]=useState(false)
+    
     const email=useRef()
     const password=useRef()
     const [seePass,setSeePass]=useState(false)
     const HandelLogin = async () => {
-      setLogin(true);
-      const userDetails = { Email: email.current.value, Password: password.current.value };
-    
-      if (email.current.value === "" || password.current.value === "") {
-        toast.error("Login Fields are Missing");
-        setLogin(false);
-        return null;
-      }
-    
-      const loginResponse = await fetch('/api/manualauth/login', {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userDetails)
-      });
-      if (loginResponse.status === 201) {
-        toast.success('Login Successfully');
-        expenseContext.ChangeUser(email.current.value)
-        localStorage.setItem('user_email', email.current.value);
-        router.push('/Dashboard');
-      } else {
-        const errorData = await loginResponse.json();
-        toast.error(errorData.error || 'Login failed');
-      }
-    
-      setLogin(false);
+      expenseContext.StatusLogin(true)
+      expenseContext.LoginHandler(email.current.value,password.current.value)    
+      expenseContext.StatusLogin(false);
     }
     
     return(
@@ -116,14 +90,14 @@ export default function LoginFields({HandelPage}){
       <p className=" text-gray-500 flex items-center">
         No account?
         <a className="underline text-blue-800" href="#" onClick={()=>HandelPage()}>Sign up</a>
-        <FaLightbulb className=" text-xl  ml-2 m-2 text-black cursor-pointer"/>
+        <FaLightbulb className=" text-xl  ml-2 m-2 text-black cursor-pointer" onClick={()=>{email.current.value="demo1@gmail.com";password.current.value="demo1@123"}}/>
       </p>
       
       <button
         type="submit"
         className="inline-block rounded-lg bg-black group px-6 border-[1px] border-black hover:bg-white  hover:text-black duration-500 py-2 text-lg font-medium text-white"
       >
-        {login ? <div className=" w-4 h-4 border-l-2 border-b-2  rounded-full border-white group-hover:border-black animate-spin mx-4 my-2"></div>:"Sign In"}
+        {expenseContext.Login ? <div className=" w-4 h-4 border-l-2 border-b-2  rounded-full border-white group-hover:border-black animate-spin mx-4 my-2"></div>:"Sign In"}
         
 
       </button>

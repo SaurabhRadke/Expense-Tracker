@@ -11,7 +11,6 @@ export async function DELETE(request,{params}){
         // console.log(Delting_budget)
         if(Delting_budget.acknowledged){
             const allBudgets=await BudgetModel.find()
-            console.log(true)
             return NextResponse.json(allBudgets,{status:201,statusText:"Budget Deleted Successfully"})
         }
         return NextResponse.json("Cannot delete Budget",{status:201,statusText:"Budget Deleted Successfully"})
@@ -36,7 +35,6 @@ export async function PUT(request,{params}){
         Delting_budget.Icon=editingData.icon
         const saveChanges=await Delting_budget.save()
         const AllBudget=await BudgetModel.find()
-        console.log(AllBudget)
         return NextResponse.json(AllBudget,{status:201,statusText:"Budget Deleted Successfully"})
 
     } catch (error) {

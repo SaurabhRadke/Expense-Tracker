@@ -21,9 +21,9 @@ export default function Expenses(){
         ExpenseData()
     },[])
     return(
-        <div className=" w-full h-full  p-6 flex flex-col gap-6 items-center text-white dark:text-black">
+        <div className="   p-6 flex flex-col gap-6 items-center text-white dark:text-black overflow-x-hidden">
             <h1 className=" text-3xl tracking-widest">Expenses List</h1>
-            <div className=" w-full h-full flex flex-col gap-3 p-3">
+            <div className=" w-full h-auto flex flex-col gap-3 p-3">
                 {ExpData.length > 0 && !getExpense ?ExpData.slice().reverse().map((data,index)=>{return(
                     <div key={index} className=" w-full h-16 rounded-lg flex justify-between px-6 tracking-widest text-xl items-center bg-[#865ead]">
                     <Image src={imag1} alt="Image" priority className=" w-[3rem] h-[3rem]  rounded-full object-cover"/>
@@ -31,7 +31,7 @@ export default function Expenses(){
                     <p >{data.CreatedAt.slice(0,10)}</p>
                     <div >Edit</div>
                 </div>
-                )}):getExpense?<div className=" w-full h-full flex justify-center text-2xl text-white  tracking-widest">Fetching Expenses ...</div>:<div className=" w-full h-full flex justify-center text-2xl text-white tracking-widest">Expenses List is Empty
+                )}):getExpense?<div className=" flex justify-center text-2xl text-white  tracking-widest">Fetching Expenses ...</div>:<div className=" w-full h-full flex justify-center text-2xl text-white tracking-widest">Expenses List is Empty
                 
             </div>}
                 
