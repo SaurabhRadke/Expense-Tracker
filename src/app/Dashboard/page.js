@@ -19,7 +19,7 @@ export default function Dashboard(){
     const ExpenseContext=useContext(ExpenseDetailsContext)
     const allBudgets=ExpenseContext.BudgetList
     const emptyList=ExpenseContext.EmptyBudget
-
+    // console.log(allBudgets)
     return(
         <div className=" w-full h-full p-2 flex flex-col px-4 py-2 gap-3 overflow-x-hidden">
             <div className=" w-full text-xl text-white tracking-widest  flex flex-col dark:text-black "><h1>Hi, Saurabh Radke <span className=" text-2xl">✌</span></h1><p className=" text-sm text-zinc-200 dark:text-zinc-700">Here is what happening with your Money</p></div>

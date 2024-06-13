@@ -10,7 +10,9 @@ import toast, { Toaster } from 'react-hot-toast';
 import ValidateToken from "@/lib/ValidateToken";
 import { ExpenseTrackerContextProvider } from "./store/ExpenseTrackerContext";
 import HandelLogoutFuncnality from "@/lib/SigoutFunctionality";
+import { signOut, useSession } from "next-auth/react";
 export default function Home() {
+  const {data,status}=useSession()
   const [loginPage,setLoginPage]=useState(false)
   const [userLoginDetails,setUserLoginDetails]=useState("")
   const [authenticated,setAuthenticated]=useState(false)
@@ -22,6 +24,10 @@ export default function Home() {
     getValiadtion()
   },[])
   const HandelLogout=()=>{
+    if(data){
+      signOut()
+      return
+    }
     const response=HandelLogoutFuncnality()
     if(response){
       setAuthenticated(false)

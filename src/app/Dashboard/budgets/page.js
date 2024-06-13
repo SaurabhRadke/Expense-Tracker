@@ -61,7 +61,7 @@ export default function Budgets(){
             const Allbudgets=ExpenseContext.BudgetList
             ExpenseContext.ChangedBudgetList([...Allbudgets,data])
             toast({
-                title:"Budget Added Successfully",
+                title: response.statusText,
                 description: formattedDate,
               })
         }

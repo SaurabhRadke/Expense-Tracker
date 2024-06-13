@@ -8,19 +8,16 @@ import RegisterField from "./RegisterFields";
 import LoginFields from "./LoginFileds";
 
 export default  function SignInPage(){
-    // const { data, status } = useSession();
+    const { data, status } = useSession();
     const [signInWindow,setSignInWindow]=useState(true)
-//   useEffect(()=>{
-//     function SetUserdetails(){
-//         if(data){
-//             localStorage.setItem('Penny-ouAth',true);
-//         }
-//         else{
-//             localStorage.setItem('Penny-ouAth',false);
-//         }
-//     }
-//     SetUserdetails()
-//   },[data])
+  useEffect(()=>{
+    function SetUserdetails(){
+        if(data){
+            localStorage.setItem('user_email',data.user.email)
+        }
+    }
+    SetUserdetails()
+  },[data])
     const HandelSignInPage=()=>{
       setSignInWindow(!signInWindow)
     }
@@ -37,7 +34,7 @@ export default  function SignInPage(){
         {signInWindow?<LoginFields HandelPage={HandelSignInPage}/>:<RegisterField HandelPage={HandelSignInPage}/>}
   
 </div>
-<div className=" flex flex-col gap-6 sm:w-[40vw] items-center">
+<div className=" flex flex-col gap-4 sm:w-[40vw] items-center">
     <div className=" w-[60%] flex items-center "><div className=" w-full h-1 bg-black"></div><h1 className=" mx-3">OR</h1><div className=" w-full h-1 bg-black"></div></div>
     <div className=" flex gap-5 items-center flex-col">
         <button  className=" bg-black rounded-md px-6 py-3 text-white tracking-widest flex gap-6 items-center hover:scale-105 hover:shadow-md hover:shadow-zinc-600 duration-200" onClick={()=>signIn("github")}><FaGithub className=" text-xl"/>Sign in with Github</button>

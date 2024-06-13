@@ -47,7 +47,13 @@ const authOption=nextAuth({
               }
           }
         })
-      ]
+      ],
+      callbacks: {
+        async session({ session, token, user }) {
+          session.accessToken = token.accessToken;
+          return session;
+        }
+      }
 })
 
 export {authOption as GET ,authOption as POST}
